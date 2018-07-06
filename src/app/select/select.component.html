@@ -1,0 +1,8 @@
+<select class="form-control form-control-sm">
+    <option *ngFor="let item of (items | async)"
+      (change)="onSelectChange($event)"
+      [value]="item"
+      [attr.selected]="item === selectedItem ? true : null"
+      > {{ !item ? 'All' : item }}
+    </option>
+</select>

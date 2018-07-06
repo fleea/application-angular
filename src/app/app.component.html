@@ -1,51 +1,73 @@
 <!-- Title & Searchbox-->
-<header class="container default-padding">
+
+      
+
+
+<div class="container default-padding">
+  <h4 class="text-center">Application</h4>
+
   <div class="row">
-    <div class="col-8 offset-2 text-center">
-      <h4>Application</h4>
-      <div class="row">
-        <div class="col-8 offset-2">
-          <div class="form-group">
-            <input
-              type="text"
-              placeholder="Search"
-              class="searchfield form-control text-center"
-            />
+    <div class="col-3">
+          <!-- Filters -->
+          <div class="row">
+            <div class="col-12">
+              <app-search-box
+                [active]= "searchQuery"
+                (keyup)="changeSearchQuery($event.target.value)"
+              ></app-search-box>
+            </div>
+            <div class="col-12 dropdown">
+                <div class="form-group">
+                  <label>Nationality</label>
+                  <app-select 
+                  [items]="nationalities"
+                  [selectedItem]= "selectedNationality"
+                  (change)="changeSelectedNationality($event.target.value)"
+                  ></app-select>
+                </div>
+              
+            </div>
+            <div class="col-12 dropdown">
+                <div class="form-group">
+                  <label>Gender</label>
+                  <app-select 
+                  [items]="genders"
+                  [selectedItem]= "selectedGender"
+                  (change)="changeSelectedGender($event.target.value)"
+                  ></app-select>
+                </div>
+            </div>
           </div>
-        </div>
+    </div>
+    <div class="col-9">
+      <div class="alert alert-primary" *ngIf="(loading | async)">
+          Loading...
       </div>
+      
+      <!-- Main -->
+      <main class="main">
+          <div class="container">
+            <div class="row">
+              <!-- <div class="alert alert-danger" *ngIf="(!loading and data.length === 0)">
+                  No user found
+              </div> -->
+              <div class="col-4" *ngFor="let item of (data | async)">
+                  <div class="card mb-2">
+                      <img class="card-img-top" src="{{item.picture.large}}" alt="{{ item.name.title }}. {{ item.name.first }} {{ item.name.last }}">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ item.name.title }}. {{ item.name.first }} {{ item.name.last }}</h5>
+                        <dl class="row">
+                            <dt class="col-sm-6">Gender</dt>
+                            <dd class="col-sm-6">{{ item.gender }}</dd>
+                            <dt class="col-sm-6">Nationality</dt>
+                            <dd class="col-sm-6">{{ item.nat }}</dd>
+                          </dl>
+                        </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </main>
     </div>
   </div>
-
-  <!-- Filters -->
-  <div class="row">
-    <div class="col-4 offset-2 dropdown">
-      <select class="form-control form-control-sm">
-        <option>Option 01</option>
-        <option>Option 02</option>
-      </select>
-    </div>
-    <div class="col-4 dropdown">
-      <select class="form-control form-control-sm">
-        <option>Option 01</option>
-        <option>Option 02</option>
-        <option>Option 03</option>
-      </select>
-    </div>
-  </div>
-</header>
-
-<!-- Main -->
-<main class="main default-padding">
-  <div class="container">
-
-    <div class="text-center" *ngIf="(loading | async)">
-      Loading...
-    </div>
-
-    <div class="article" *ngFor="let item of (data | async)">
-      <h4>Article Title ({{item}}) -- User.name.first User.name.last</h4>
-      <p>Article Description -- User.nat - User.gender</p>
-    </div>
-  </div>
-</main>
+</div>
