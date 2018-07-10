@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   changeSelectedNationality = nationality => this.store.dispatch({ type: AppActions.CHANGE_SELECTED_NATIONALITY, payload: nationality });
   changeSelectedGender = gender => this.store.dispatch({ type: AppActions.CHANGE_SELECTED_GENDER, payload: gender });
-  changeSearchQuery = query => !!query && this.store.dispatch({ type: AppActions.CHANGE_SEARCH_QUERY, payload: query.trim() });
+  changeSearchQuery = query => this.store.dispatch({ type: AppActions.CHANGE_SEARCH_QUERY, payload: !!query ? query.trim() : query });
 
   ngOnInit() {
     this.store.dispatch({ type: AppActions.DATA_FETCH });
