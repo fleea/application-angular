@@ -17,12 +17,15 @@ export class AppComponent implements OnInit {
   selectedNationality: Observable<string>;
   genders: Observable<Array<string>>;
   selectedGender: Observable<string>;
+  autoCompleteNames: Observable<Array<string>>;
 
   constructor(private store: Store<State>) {}
 
   changeSelectedNationality = nationality => this.store.dispatch({ type: AppActions.CHANGE_SELECTED_NATIONALITY, payload: nationality });
   changeSelectedGender = gender => this.store.dispatch({ type: AppActions.CHANGE_SELECTED_GENDER, payload: gender });
-  changeSearchQuery = query => this.store.dispatch({ type: AppActions.CHANGE_SEARCH_QUERY, payload: !!query ? query.trim() : query });
+  changeSearchQuery = query => typeof query === 'string' &&
+  this.store.dispatch({ type: AppActions.CHANGE_SEARCH_QUERY, payload: !!query ? query.trim() : query })
+
 
   ngOnInit() {
     this.store.dispatch({ type: AppActions.DATA_FETCH });
@@ -33,5 +36,6 @@ export class AppComponent implements OnInit {
     this.selectedNationality = this.store.select(AppSelectors.selectedNationality);
     this.genders = this.store.select(AppSelectors.genders);
     this.selectedGender = this.store.select(AppSelectors.selectedGender);
+    this.autoCompleteNames = this.store.select(AppSelectors.autoCompleteNames);
   }
 }

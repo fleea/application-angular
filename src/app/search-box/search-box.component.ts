@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 
 @Component({
   selector: 'app-search-box',
@@ -7,7 +8,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class SearchBoxComponent {
+  selected = '';
   @Input() active = '';
-  @Output() keyup: EventEmitter<string> = new EventEmitter<string>();
-  onInputKeyup = event => this.keyup.emit(event);
+  @Input() names = [];
+  @Output() inputChange: EventEmitter<string> = new EventEmitter<string>();
+  onInputChange = event => this.inputChange.emit(event.target.value);
+  typeaheadOnSelect = (event: TypeaheadMatch) => this.inputChange.emit(event.value);
 }

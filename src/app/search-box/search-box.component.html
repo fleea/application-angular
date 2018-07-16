@@ -3,6 +3,11 @@
       type="text"
       placeholder="Search"
       class="searchfield form-control text-center"
-      (keyup)= "onInputKeyup($event)"
+      (keyup)= "onInputChange($event)"
+      [typeahead]="names"
+      [typeaheadScrollable]="true"
+      [typeaheadOptionsInScrollableView]="15"
+      (typeaheadOnSelect)="typeaheadOnSelect($event)"
+      [(ngModel)]="selected"
     />
   </div>

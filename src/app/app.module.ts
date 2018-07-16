@@ -10,6 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SelectComponent } from './select/select.component';
+import { FormsModule } from '@angular/forms';
+
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 @NgModule({
   declarations: [ AppComponent, SearchBoxComponent, SelectComponent ],
@@ -20,7 +23,9 @@ import { SelectComponent } from './select/select.component';
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
     }),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    TypeaheadModule.forRoot()
   ],
   providers: [],
   bootstrap: [ AppComponent ]

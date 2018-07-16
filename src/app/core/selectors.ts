@@ -17,7 +17,7 @@ const NATIONALITY = 'nat';
 const GENDER = 'gender';
 
 /** GETTING ALL DATA */
-const getAllBy = key => array => array.map(r => r[key]).filter((elem, pos, arr) => arr.indexOf(elem) === pos);
+const getAllBy = R.curry((key, array) => array.map(r => r[key]).filter((elem, pos, arr) => arr.indexOf(elem) === pos));
 const addAllOption = array => ['', ...array];
 export const getAllNationalities = R.compose(addAllOption, getAllBy(NATIONALITY));
 export const getAllGenders = R.compose(addAllOption, getAllBy(GENDER));
@@ -40,11 +40,21 @@ const filteredData = (state: AppState) => R.compose(
   filterByGender(state.selectedGender)
 )(state.data);
 
+/** MAKE ARRAY OF STRING OF NAMES */
+const getNames = users => users.map(({ name }) => `${name.first} ${name.last}`);
+
+/** TODO: How can we combine this with filtered data composer? */
+const autoCompleteNames = (state: AppState) => R.compose(
+  getNames,
+  filteredData
+)(state);
+
 /** MAIN EXPORT */
 export const AppSelectors = {
   loading: createSelector(getState, loading),
   data: createSelector(getState, data),
   filteredData: createSelector(getState, filteredData),
+  autoCompleteNames: createSelector(getState, autoCompleteNames),
   searchQuery: createSelector(getState, searchQuery),
   nationalities: createSelector(getState, nationalities),
   selectedNationality: createSelector(getState, selectedNationality),

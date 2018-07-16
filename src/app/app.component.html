@@ -13,7 +13,8 @@
             <div class="col-12">
               <app-search-box
                 [active]= "searchQuery"
-                (keyup)="changeSearchQuery($event.target.value)"
+                [names]="autoCompleteNames"
+                (inputChange)="changeSearchQuery($event)"
               ></app-search-box>
             </div>
             <div class="col-12 dropdown">
@@ -25,7 +26,6 @@
                   (change)="changeSelectedNationality($event.target.value)"
                   ></app-select>
                 </div>
-              
             </div>
             <div class="col-12 dropdown">
                 <div class="form-group">
